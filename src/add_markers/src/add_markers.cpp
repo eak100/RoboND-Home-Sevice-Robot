@@ -5,25 +5,41 @@
 
 
 
-double startX= -3.0;
-double startY= 1.0;
-double endX= 2.0;
-double endY= 1.0;
+double startX= 6.0;
+double startY= 4.0;
+double endX= -12.0;
+double endY= -3.0;
 
 bool isItemPicked=false;
 bool isItemDropped=false;
 
 void odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
-  double RobotX = msg->pose.pose.position.x;
-  double RobotY = msg->pose.pose.position.y;
+  double RobotY = msg->pose.pose.position.x;
+  double RobotX = msg->pose.pose.position.y;
 
-  double distance2Start=sqrt(pow(RobotX-startX, 2) + pow(RobotY-startY, 2));
-  double distance2End=sqrt(pow(RobotX-endX, 2) + pow(RobotY-endY, 2));
+double RobotYOrientPos=-1*RobotY;
+/*  ROS_INFO("RobotX: %f", RobotYOrientPos);
+    ROS_INFO("RobotY: %f", RobotY); */
 
-  if (distance2Start < 0.4) {
+  double distance2Start=sqrt(pow(startX-RobotX, 2) + pow(startY-RobotYOrientPos, 2));
+  double distance2End=sqrt(pow(endX-RobotX, 2) + pow(endY-RobotYOrientPos, 2));
+/*  ROS_INFO("RobotX: %f", RobotX);
+    ROS_INFO("startX: %f", startX);
+      ROS_INFO("endX: %f", endX);
+    ROS_INFO("SubtractX: %f", startX-RobotX);
+
+    ROS_INFO("RobotY: %f", RobotY);
+ROS_INFO("startY: %f", startY);
+ROS_INFO("endY: %f", endY);
+      ROS_INFO("SubtractY: %f", startY-RobotY);
+ROS_INFO("distance2Start: %f", distance2Start);
+ROS_INFO("distance2End: %f", distance2End);
+*/
+ ros::Duration(3.0).sleep();
+  if (distance2Start < 0.2) {
       isItemPicked = true;
     }
-else if (distance2End < 0.8) {
+else if (distance2End < 0.2) {
       isItemDropped = true;
     }
 }
@@ -64,12 +80,12 @@ int main( int argc, char** argv )
   marker.pose.orientation.x = 0.0;
   marker.pose.orientation.y = 0.0;
   marker.pose.orientation.z = 0.0;
-  marker.pose.orientation.w = 1.0;
+  marker.pose.orientation.w = -1.5708;
 
   // Set the scale of the marker -- 1x1x1 here means 1m on a side
-  marker.scale.x = 0.2;
-  marker.scale.y = 0.2;
-  marker.scale.z = 0.2;
+  marker.scale.x = 0.5;
+  marker.scale.y = 0.5;
+  marker.scale.z = 0.5;
 
   // Set the color -- be sure to set alpha to something non-zero!
   marker.color.r = 0.0f;
@@ -107,7 +123,7 @@ int main( int argc, char** argv )
 else if (isItemDropped)
 {
   // Go to Sleep for 1 seconds
-    ros::Duration(2.0).sleep();
+  //  ros::Duration(2.0).sleep();
   marker.pose.position.x = endX;
   marker.pose.position.y = endY;
   marker.action = visualization_msgs::Marker::ADD;

@@ -24,9 +24,9 @@ int main(int argc, char** argv){
   goal.target_pose.header.stamp = ros::Time::now();
 
   // Define a position and orientation for the robot to reach
-  goal.target_pose.pose.position.x = -3.0;
-  goal.target_pose.pose.position.y = 1.0;
-  goal.target_pose.pose.orientation.w = 1.0;
+  goal.target_pose.pose.position.x = 6.0;
+  goal.target_pose.pose.position.y = 4.0;
+  goal.target_pose.pose.orientation.w = -1.0;
 
    // Send the goal position and orientation for the robot to reach
   ROS_INFO("Sending goal");
@@ -41,15 +41,15 @@ int main(int argc, char** argv){
     else
       ROS_INFO("The base failed to move for some reason");
 
-   
+
 
   // Go to Sleep for 5 seconds
     ros::Duration(5.0).sleep();
 
 
   // Define a position and orientation for the robot to reach
-  goal.target_pose.pose.position.x = 2.0;
- goal.target_pose.pose.position.y =  1.0;
+  goal.target_pose.pose.position.x = -12.0;
+ goal.target_pose.pose.position.y =  -3.0;
   goal.target_pose.pose.orientation.w = 1.0;
 
 
